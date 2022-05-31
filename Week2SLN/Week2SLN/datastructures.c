@@ -330,10 +330,10 @@ bool StudentTTest(StudentLP *inputList)
 				result = false;
 				break;
 			}
+
 			current = current->next;
 		}
-		outputTestResult(DS_TREE, OP_INSERT_SIZE, result,
-						 current != NULL ? current->student : NULL);
+		outputTestResult(DS_TREE, OP_INSERT_SIZE, result,current != NULL ? current->student : NULL);
 	}
 
 	// test contains
