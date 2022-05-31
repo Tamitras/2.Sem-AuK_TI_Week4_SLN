@@ -85,6 +85,7 @@ void StudentLFree(StudentLP* anchor_adr)
 	{
 		return;
 	}
+
 	StudentLP current = *anchor_adr;
 
 	while (current)
