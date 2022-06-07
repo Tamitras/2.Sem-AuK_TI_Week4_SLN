@@ -208,9 +208,9 @@ void getNext(StudentLP* headOfList, StudentT* currentTreeElement)
 	if (!currentTreeElement)
 		return;
 
-	StudentT* currentTreeStud = currentTreeElement->student;
+	StudentT* currentTreeStud = currentTreeElement;
 
-	StudentLInsertSorted(headOfList, currentTreeStud);
+	StudentLInsertSorted(headOfList, currentTreeElement->student);
 
 	getNext(headOfList, currentTreeElement->lchild);
 	getNext(headOfList, currentTreeElement->rchild);
@@ -233,8 +233,6 @@ StudentLP* StudentTToSortedList(StudentTP* root_adr)
 	getNext(headOfList, *root_adr);
 
 	return deepLCopy(headOfList);
-
-	//return headOfList;
 }
 
 bool insertSorted(StudentT* studentNode, Student_p newStudent)
