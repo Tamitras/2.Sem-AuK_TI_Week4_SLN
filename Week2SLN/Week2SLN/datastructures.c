@@ -353,11 +353,9 @@ bool StudentTTest(StudentLP* inputList) {
 
 		while (current != NULL) {
 			Student_p current_element = current->student;
-			StudentTP found_element = StudentTFindByMatr(tree,
-				current_element->matrnr);
-			if (found_element == NULL
-				|| !StudentEquals(current_element,
-					found_element->student)) {
+			//printf("Looking for..(%d)..", current->student->matrnr);
+			StudentTP found_element = StudentTFindByMatr(tree,current_element->matrnr);
+			if (found_element == NULL|| !StudentEquals(current_element,found_element->student)) {
 				result = false;
 				break;
 			}
@@ -383,11 +381,8 @@ bool StudentTTest(StudentLP* inputList) {
 
 		while (current != NULL) {
 			Student_p current_element = current->student;
-			StudentTP found_element = StudentTFindByName(tree,
-				current_element->lastname);
-			if (found_element == NULL
-				|| !(strcmp(current_element->lastname,
-					found_element->student->lastname) == 0)) {
+			StudentTP found_element = StudentTFindByName(tree,current_element->lastname);
+			if (found_element == NULL || !(strcmp(current_element->lastname, found_element->student->lastname) == 0)) {
 				result = false;
 				break;
 			}

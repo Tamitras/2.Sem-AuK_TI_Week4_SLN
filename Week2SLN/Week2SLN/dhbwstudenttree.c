@@ -101,19 +101,140 @@ bool StudentTContainsStudent(StudentTP* root_adr, Student_p student)
 	return foundStudent;
 }
 
+
 StudentTP StudentTFindByMatr(StudentTP* root_adr, int matrnr)
 {
-	return NULL;
+	if (*root_adr == NULL)
+	{
+		return NULL;
+	}
+
+	StudentTP* foundStudentAdr = NULL;
+	StudentTP foundStudent = NULL;
+
+	if ((*root_adr)->student->matrnr == matrnr)
+	{
+		foundStudent = (*root_adr);
+	}
+	else
+	{
+		foundStudent = StudentTFindByMatr(&(*root_adr)->lchild, matrnr);
+
+		if (foundStudent == NULL)
+			foundStudent = StudentTFindByMatr(&(*root_adr)->rchild, matrnr);
+
+	}
+
+	return foundStudent;
 }
 
 StudentTP StudentTFindByName(StudentTP* root_adr, char* lastname)
 {
-	return NULL;
+	if (*root_adr == NULL)
+	{
+		return NULL;
+	}
+
+	StudentTP* foundStudentAdr = NULL;
+	StudentTP foundStudent = NULL;
+	if(strcmp((*root_adr)->student->lastname, lastname)== 0)
+	{
+		foundStudent = (*root_adr);
+	}
+	else
+	{
+		foundStudent = StudentTFindByName(&(*root_adr)->lchild, lastname);
+
+		if (foundStudent == NULL)
+			foundStudent = StudentTFindByName(&(*root_adr)->rchild, lastname);
+	}
+
+	return foundStudent;
+}
+
+
+bool hasTwoSubRefs(StudentT* node)
+{
+	return (node->lchild != NULL && node->rchild != NULL);
+}
+
+bool deleteFromTree(StudentTP* root, StudentT* targetingNode)
+{
+	bool contained = false;
+
+	if (root == NULL)
+	{
+		return false; // cant remove, tree is empty
+	}
+	else
+	{
+		// check if tree contains targetingNode
+		contained = StudentTContainsStudent(root, targetingNode->student);
+
+		if (contained) // continue
+		{
+			// adjust pointers
+			if ((*root)->student->matrnr == targetingNode->student->matrnr) // is root
+			{
+				// complicated
+			}
+			else // not root, check if targetingNode has 2 refs (left, right
+			{
+				if (hasTwoSubRefs(targetingNode))
+				{
+					// true --> complicated
+				}
+				else
+				{
+					// has only 1 ref --> readjust ref
+
+					if (targetingNode->lchild == NULL)
+					{
+						// right tree
+						//targetingNode->rchild
+					}
+				}
+			}
+		}
+		else // not existing in tree
+		{
+			return false;
+		}
+	}
+}
+
+void getNext(StudentLP* headOfList, StudentT* currentTreeElement)
+{
+	if (!currentTreeElement)
+		return;
+
+	StudentT* currentTreeStud = currentTreeElement->student;
+
+	StudentLInsertSorted(headOfList, currentTreeStud);
+
+	getNext(headOfList, currentTreeElement->lchild);
+	getNext(headOfList, currentTreeElement->rchild);
 }
 
 StudentLP* StudentTToSortedList(StudentTP* root_adr)
 {
-	return NULL;
+	StudentLP headOfListAnchor = NULL;
+	StudentLP* headOfList = &headOfListAnchor;
+
+	if (root_adr == NULL)
+	{
+		return;
+	}
+	else
+	{
+		StudentLInsertSorted(headOfList, (*root_adr)->student);
+	}
+
+	getNext(headOfList, *root_adr);
+
+	return deepLCopy(headOfList);
+
+	//return headOfList;
 }
 
 bool insertSorted(StudentT* studentNode, Student_p newStudent)
@@ -124,7 +245,7 @@ bool insertSorted(StudentT* studentNode, Student_p newStudent)
 	{
 		return true; // parentNode will be new StudentNode
 	}
-	
+
 	else if ((studentNode)->student->matrnr > newStudent->matrnr) // left tree
 	{
 		ret = insertSorted((studentNode)->lchild, newStudent);
