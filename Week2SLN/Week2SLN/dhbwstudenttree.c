@@ -132,15 +132,10 @@ bool insertSorted(StudentT* studentNode, Student_p newStudent)
 		{
 			if (StudentTContainsStudent(&studentNode, newStudent))
 			{
-				return false; // student exists
+				return false; // student already exists
 			}
 			StudentTP newChild = StudentTPAlloc(newStudent);
 			(studentNode)->lchild = newChild;
-			//printf("New Insertion %s %d  on left tree of %s %d\n",
-			//	newChild->student->lastname,
-			//	newChild->student->matrnr,
-			//	studentNode->student->lastname,
-			//	studentNode->student->matrnr);
 		}
 	}
 	else
@@ -154,11 +149,6 @@ bool insertSorted(StudentT* studentNode, Student_p newStudent)
 			}
 			StudentTP newChild = StudentTPAlloc(newStudent);
 			(studentNode)->rchild = newChild;
-			//printf("New Insertion %s %d  on right tree of %s %d \n",
-			//	newChild->student->lastname,
-			//	newChild->student->matrnr,
-			//	studentNode->student->lastname,
-			//	studentNode->student->matrnr);
 		}
 	}
 }
@@ -215,15 +205,14 @@ int getDepth(StudentT* studentNode)
 	if (studentNode == NULL)
 		return 0;
 
-	/* compute the depth of each subtree */
-	int lDepth = getDepth(studentNode->lchild);
-	int rDepth = getDepth(studentNode->rchild);
+	int tempDepthLeft = getDepth(studentNode->lchild);
+	int tempDepthRight = getDepth(studentNode->rchild);
 
 	/* use the larger one */
-	if (lDepth > rDepth)
-		return (lDepth + 1);
+	if (tempDepthLeft > tempDepthRight)
+		return (tempDepthLeft + 1);
 	else
-		return (rDepth + 1);
+		return (tempDepthRight + 1);
 }
 
 int StudentTDepth(StudentTP* root_adr)
