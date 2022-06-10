@@ -168,7 +168,7 @@ StudentLP* StudentsFromFile(char* filename)
 bool StudentLImplemented()
 {
 	// TODO: hier auf true aendern, damit Ihre Implementierung getestet wird
-	return false;
+	return true;
 }
 
 bool StudentLContainsStudent(StudentLP* anchor_adr, Student_p student)

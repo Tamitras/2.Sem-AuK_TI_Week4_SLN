@@ -72,9 +72,6 @@ bool StudentTImplemented()
 
 bool StudentTContainsStudent(StudentTP* root_adr, Student_p student)
 {
-	// Rekursiv nach dem Element suchen
-	// Hilfsmethode schreiben
-
 	// set root adr
 	StudentTP root = *root_adr;
 	bool foundStudent = false;
@@ -84,11 +81,11 @@ bool StudentTContainsStudent(StudentTP* root_adr, Student_p student)
 		//printf("<Duplicate student %s %d >\n", student->lastname, student->matrnr);
 		return true;
 	}
-	else if (root->student->matrnr > student->matrnr) // linker baum
+	else if (root->student->matrnr > student->matrnr) // left sub tree
 	{
 		root = root->lchild;
 	}
-	else // rechter Baum
+	else // right sub tree
 	{
 		root = root->rchild;
 	}
@@ -109,7 +106,6 @@ StudentTP StudentTFindByMatr(StudentTP* root_adr, int matrnr)
 		return NULL;
 	}
 
-	StudentTP* foundStudentAdr = NULL;
 	StudentTP foundStudent = NULL;
 
 	if ((*root_adr)->student->matrnr == matrnr)
@@ -135,8 +131,8 @@ StudentTP StudentTFindByName(StudentTP* root_adr, char* lastname)
 		return NULL;
 	}
 
-	StudentTP* foundStudentAdr = NULL;
 	StudentTP foundStudent = NULL;
+
 	if(strcmp((*root_adr)->student->lastname, lastname)== 0)
 	{
 		foundStudent = (*root_adr);
@@ -151,7 +147,6 @@ StudentTP StudentTFindByName(StudentTP* root_adr, char* lastname)
 
 	return foundStudent;
 }
-
 
 bool hasTwoSubRefs(StudentT* node)
 {
@@ -239,7 +234,7 @@ bool insertSorted(StudentT* studentNode, Student_p newStudent)
 {
 	bool ret = false;
 
-	if (studentNode == NULL) // insertFirst
+	if (studentNode == NULL)
 	{
 		return true; // parentNode will be new StudentNode
 	}
